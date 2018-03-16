@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Empty layout</title>
+  <script>
+    window.__cdnUrl = function() { return "{{ '' | asset_url }}" };
+  </script>
+</head>
+
+<body>
+  {{ content_for_layout }}
+
+  {% yield 'javascripts' %}
+</body>
+</html>

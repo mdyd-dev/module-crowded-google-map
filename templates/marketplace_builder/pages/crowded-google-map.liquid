@@ -1,0 +1,111 @@
+---
+slug: crowded-google-map
+format: html
+layout_name: empty
+---
+
+<div data-crowded-google-map style="height: 700px;"></div>
+
+
+{% content_for 'javascripts' %}
+  <script src="https://maps.googleapis.com/maps/api/js"></script>
+  <script src="{{ 'crowded-google-map.js' | asset_url }}"></script>
+
+  <script>
+    const defaultClusterStyle = {
+      textColor: 'white',
+      textSize: 12,
+      height: 50,
+      width: 50
+    };
+
+      const container = document.querySelector("[data-crowded-google-map]");
+      const googleMapsConfig = {
+        zoom: 3,
+        center: { lat: 20.94, lng: 9.83 }
+      };
+      const markerClustererConfig = {
+        gridSize: 50,
+        maxZoom: 14,
+        styles: [
+          Object.assign({}, defaultClusterStyle, {
+            url: `${window.__cdnUrl()}images/gmap/small.png`
+          }),
+          Object.assign({}, defaultClusterStyle, {
+            url: `${window.__cdnUrl()}images/gmap/medium.png`
+          }),
+          Object.assign({}, defaultClusterStyle, {
+            url: `${window.__cdnUrl()}images/gmap/large.png`
+          })
+        ]
+      };
+      const markers = new Promise(resolve => resolve([{
+        first_name: "Michael",
+        last_name: "Scott",
+        position: {
+          lat: 41.408970,
+          lng: -75.662415
+        }
+      }, {
+        first_name: "Kevin",
+        last_name: "Malone",
+        position: {
+          lat: 41.408970,
+          lng: -75.662415
+        }
+      }, {
+        first_name: "Dwight",
+        last_name: "Schrute",
+        position: {
+          lat: 41.408970,
+          lng: -75.662415
+        }
+      }, {
+        first_name: "Pam",
+        last_name: "Beesly",
+        position: {
+          lat: 41.408970,
+          lng: -75.662415
+        }
+      }, {
+        first_name: "Jim",
+        last_name: "Halpert",
+        position: {
+          lat: 41.408970,
+          lng: -75.662415
+        }
+      }, {
+        first_name: "Angela",
+        last_name: "Martin",
+        position: {
+          lat: 41.408970,
+          lng: -75.662415
+        }
+      }]));
+      const markerParser = marker => {
+        return Object.assign({}, marker, {
+          name: `${marker.first_name} ${marker.last_name}`,
+          href: `http://google.com/?q=${marker.first_name}+${marker.last_name}`
+        });
+      };
+      const template = marker => {
+        return {
+          content: `<a href="${marker.href}">${marker.name}</a>`
+        };
+      };
+
+      if (container) {
+        const options = {
+          container: container,
+          googleMapsConfig: googleMapsConfig,
+          clustererConfig: markerClustererConfig,
+          markersData: markers,
+          parseMarkerData: markerParser,
+          infoWindowConfig: template
+        };
+
+        new CrowdedGoogleMap(options);
+      }
+  </script>
+
+{% endcontent_for %}
