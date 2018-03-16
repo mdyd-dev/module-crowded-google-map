@@ -2,27 +2,15 @@ const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const path = require('path');
 
+const destinationPath = '../../..';
+
 module.exports = class extends Generator {
-  prompting() {
-    const prompts = [
-      {
-        type: 'confirm',
-        name: 'savePackage',
-        message: 'Do you also want to save crowded-google-map module into your projects package.json?'
-      }
-    ];
-
-    return this.prompt(prompts).then(props => {
-      this.props = props;
-    });
-  }
-
   writing() {
-    this.fs.copyTpl(this.templatePath('.'), this.destinationPath('../../marketplace_builder'), this.props);
+    this.fs.copyTpl(this.templatePath('.'), this.destinationPath(destinationPath), this.props);
   }
 
   install() {
-    this.npmInstall(['crowded-google-map'], { save: true }).then(() => {
+    this.npmInstall(['crowded-google-map'], { save: true }, { cwd: path.join(destinationPath) }).then(() => {
       console.log(chalk.green('Crowded Google Map :: NPM module installed and saved to package.json'));
     });
   }

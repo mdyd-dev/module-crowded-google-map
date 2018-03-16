@@ -4,7 +4,7 @@
   "browserslist": "last 2 versions",
   "sideEffects": false,
   "dependencies": {
-    "crowded-google-map": "^2"
+    "crowded-google-map": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.41",
@@ -24,6 +24,8 @@
   },
   "pre-commit": {
     "silent": true,
-    "run": ["build"]
+    "run": [
+      "build"
+    ]
   }
 }
